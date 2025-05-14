@@ -1,20 +1,58 @@
-function calculateArea(length, width) {
-  let area;
-  if (length > 0 && width > 0) {
-    area = length * width;
-  } else {
-    area = 0;
-    console.log("Invalid input: Length and width must be positive.");
+class Shape {
+  constructor(name) {
+    this.name = name;
   }
-  return area;
+
+  getArea() {
+    throw new Error("getArea() must be implemented by subclass");
+  }
+
+  getPerimeter() {
+    throw new Error("getPerimeter() must be implemented by subclass");
+  }
+
+  describe() {
+    console.log(`This is a ${this.name}`);
+  }
 }
 
-let rectangleLength = 5;
-let rectangleWidth = 10;
-let rectangleArea = calculateArea(rectangleLength, rectangleWidth);
+class Circle extends Shape {
+  constructor(radius) {
+    super("Circle");
+    this.radius = radius;
+  }
 
-console.log("The area of the rectangle is: " + rectangleArea);
+  getArea() {
+    return Math.PI * this.radius ** 2;
+  }
 
-for (let i = 0; i < 5; i++) {
-  console.log("Iteration number: " + i);
+  getPerimeter() {
+    return 2 * Math.PI * this.radius;
+  }
 }
+
+class Rectangle extends Shape {
+  constructor(width, height) {
+    super("Rectangle");
+    this.width = width;
+    this.height = height;
+  }
+
+  getArea() {
+    return this.width * this.height;
+  }
+
+  getPerimeter() {
+    return 2 * (this.width + this.height);
+  }
+}
+
+const circle = new Circle(5);
+circle.describe();
+console.log("Area:", circle.getArea().toFixed(2));
+console.log("Perimeter:", circle.getPerimeter().toFixed(2));
+
+const rect = new Rectangle(4, 6);
+rect.describe();
+console.log("Area:", rect.getArea());
+console.log("Perimeter:", rect.getPerimeter());
