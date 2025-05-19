@@ -49,10 +49,28 @@ class Cinema {
     console.log(" ")
   }
 
-  reserveSeat(row, seat) {}
+  reserveSeat(row, seat) {
+    if((row > this.rows || row <= 0) || (seat > this.rowsSeats || seat <= 0)) {
+      console.log("The seat must be between 1 - " + this.rows + " rows and 1 - " + this.rowsSeats + " seats")
+    } else {
+      if(this.cinemaSeats[row - 1][seat - 1].reserve()) {
+        console.log("You reserve this seat (" + row + " row, " + seat + " seat) ")
+      } else {
+        console.log("This seat (" + row + " row, " + seat + " seat) has already reserved")
+      }
+    }
+  }
 }
 
 const cinema = new Cinema(5, 10)
+
+cinema.showSeatStatus()
+
+cinema.reserveSeat(3, 5)
+
+cinema.reserveSeat(10, 5)
+
+cinema.reserveSeat(3, 5)
 
 cinema.showSeatStatus()
 
