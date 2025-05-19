@@ -14,3 +14,19 @@ class Seat {
     }
   }
 }
+
+class Cinema {
+  constructor(rows, rowsSeats) {
+    this.rows = rows;
+    this.rowsSeats = rowsSeats;
+    this.cinemaSeats = this.createCinema()
+  }
+
+  createCinema() {}
+
+  showSeatStatus() {}
+
+  reserveSeat(row, seat) {}
+}
+
+
