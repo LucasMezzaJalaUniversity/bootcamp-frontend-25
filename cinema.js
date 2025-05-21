@@ -5,12 +5,14 @@ class Seat {
     this.reserved = false;
   }
 
-  reserve() {
+  setReserved() {
     if(!this.reserved) {
-      this.reserved = true
+      this.reserved = true;
     }
+  }
 
-    return this.reserved;
+  getReserved() {
+    return this.reserved
   }
 }
 
@@ -49,11 +51,13 @@ class Cinema {
   }
 
   reserveSeat(row, seat) {
-    if((row > this.rows || row <= 1) || (seat > this.rowsSeats || seat <= 1)) {
+    if((row > this.rows || row < 1) || (seat > this.rowsSeats || seat < 1)) {
       console.log("The seat must be between 1 - " + this.rows + " rows and 1 - " + this.rowsSeats + " seats")
     } else {
-      if(this.cinemaSeats[row - 1][seat - 1].reserve()) {
+      const selectedSeat = this.cinemaSeats[row - 1][seat - 1];
+      if(!selectedSeat.getReserved()) {
         console.log("You reserve this seat (" + row + " row, " + seat + " seat) ")
+        selectedSeat.setReserved()
       } else {
         console.log("This seat (" + row + " row, " + seat + " seat) has already reserved")
       }
@@ -72,6 +76,12 @@ cinema.reserveSeat(10, 5)
 cinema.reserveSeat(3, 5)
 
 cinema.reserveSeat(3, 1)
+
+cinema.reserveSeat(1, 1)
+
+cinema.reserveSeat(0, 1)
+
+cinema.reserveSeat(0, -1)
 
 cinema.showSeatStatus()
 
