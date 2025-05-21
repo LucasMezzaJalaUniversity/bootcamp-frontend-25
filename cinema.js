@@ -8,10 +8,9 @@ class Seat {
   reserve() {
     if(!this.reserved) {
       this.reserved = true
-      return true
-    } else {
-      return false
     }
+
+    return this.reserved;
   }
 }
 
@@ -71,6 +70,8 @@ cinema.reserveSeat(3, 5)
 cinema.reserveSeat(10, 5)
 
 cinema.reserveSeat(3, 5)
+
+cinema.reserveSeat(3, 1)
 
 cinema.showSeatStatus()
 
