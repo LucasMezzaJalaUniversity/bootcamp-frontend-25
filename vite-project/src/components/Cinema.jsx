@@ -13,6 +13,29 @@ export const Cinema = ({ row, rowsSeats }) => {
     })
   )
 
+  const reserveSeat = (selectedRow, selectedSeat) => {
+    if((selectedRow > row || selectedRow < 1) || (selectedSeat > rowsSeats || selectedSeat < 1)) {
+      console.log("The seat must be between 1 - " + row + " rows and 1 - " + rowsSeats + " seats")
+    } else {
+      const selectedSeat = cinemaSeats[selectedRow - 1][selectedSeat - 1];
+      if(!selectedSeat.reserved) {
+        console.log("You reserve this seat (" + selectedRow + " row, " + selectedSeat + " seat) ")
+        setCinemaSeats(prevState => (
+          prevState.map((rowSeat, rowIdx) => {
+            rowSeat.map((elm, elmIdx) => {
+              if(rowIdx === selectedRow && elmIdx == selectedSeat) {
+                return { ...elm, reserved: true }
+              }
+              return elm;
+            })
+          })
+        ))
+      } else {
+        console.log("This seat (" + selectedRow + " row, " + selectedSeat + " seat) has already reserved")
+      }
+    }
+  }
+
   console.log(cinemaSeats)
 
   return (
