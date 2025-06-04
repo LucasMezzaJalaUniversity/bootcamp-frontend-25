@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 export const Cinema = ({ row, rowsSeats }) => {
-  const [cinemaSeats, setCinemaSeats] = useState(
+  const [ cinemaSeats, setCinemaSeats ] = useState(
     Array.from({ length: row }, (row, rowIndex) => {
       return Array.from({ length: rowsSeats }, (seat, seatIndex) => {
         return {
@@ -12,31 +12,25 @@ export const Cinema = ({ row, rowsSeats }) => {
       })
     })
   )
+  const [ state, setState ] = useState('')
 
   const reserveSeat = (selectedRow, selectedSeat) => {
-    if((selectedRow > row || selectedRow < 1) || (selectedSeat > rowsSeats || selectedSeat < 1)) {
-      console.log("The seat must be between 1 - " + row + " rows and 1 - " + rowsSeats + " seats")
+    const getSelectedSeat = cinemaSeats[selectedRow - 1][selectedSeat - 1];
+    if(!getSelectedSeat.reserved) {
+      setCinemaSeats(prevState => (
+        prevState.map((rowSeat, rowIdx) =>
+          rowSeat.map((elm, elmIdx) =>
+            rowIdx + 1 === selectedRow && elmIdx + 1 === selectedSeat
+              ? { ...elm, reserved: true }
+              : elm
+          )
+        )
+      ))
+      setState("You reserve this seat (" + selectedRow + " row, " + selectedSeat + " seat) ")
     } else {
-      const selectedSeat = cinemaSeats[selectedRow - 1][selectedSeat - 1];
-      if(!selectedSeat.reserved) {
-        console.log("You reserve this seat (" + selectedRow + " row, " + selectedSeat + " seat) ")
-        setCinemaSeats(prevState => (
-          prevState.map((rowSeat, rowIdx) => {
-            rowSeat.map((elm, elmIdx) => {
-              if(rowIdx === selectedRow && elmIdx == selectedSeat) {
-                return { ...elm, reserved: true }
-              }
-              return elm;
-            })
-          })
-        ))
-      } else {
-        console.log("This seat (" + selectedRow + " row, " + selectedSeat + " seat) has already reserved")
-      }
+      setState("This seat (" + selectedRow + " row, " + selectedSeat + " seat) has already reserved")
     }
   }
-
-  console.log(cinemaSeats)
 
   return (
     <section>
@@ -46,15 +40,16 @@ export const Cinema = ({ row, rowsSeats }) => {
           <li key={idx}>
             <em>Row {idx + 1}:</em>
             <ul>
-              {elm.map((seat, seatIdx) => (
-                <li key={seatIdx}>
-                  <em>{seat.reserved ? 'R' : 'A'}</em>
+              {elm.map((seat) => (
+                <li key={seat.seat}>
+                  <button onClick={e => reserveSeat(idx + 1, seat.seat)}>{seat.reserved ? 'R' : 'A'}</button>
                 </li>
               ))}
             </ul>
           </li>
         ))}
       </ul>
+      {state && <p>{state}</p>}
     </section>
   )
 }
