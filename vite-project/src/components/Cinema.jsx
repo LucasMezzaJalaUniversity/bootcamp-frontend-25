@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Seat } from "./Seat"
 
 export const Cinema = ({ row, rowsSeats }) => {
   const [ cinemaSeats, setCinemaSeats ] = useState(
@@ -41,9 +42,7 @@ export const Cinema = ({ row, rowsSeats }) => {
             <em>Row {idx + 1}:</em>
             <ul>
               {elm.map((seat) => (
-                <li key={seat.seat}>
-                  <button onClick={e => reserveSeat(idx + 1, seat.seat)}>{seat.reserved ? 'R' : 'A'}</button>
-                </li>
+                <Seat seat={seat} onClick={() => reserveSeat(idx + 1, seat.seat)}/>
               ))}
             </ul>
           </li>
