@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Seat } from "./Seat"
+import './Cinema.css'
 
 export const Cinema = ({ row, rowsSeats }) => {
   const [ cinemaSeats, setCinemaSeats ] = useState(
@@ -34,13 +35,13 @@ export const Cinema = ({ row, rowsSeats }) => {
   }
 
   return (
-    <section>
+    <section className="cinema">
       <h1>========= SCREEN =========</h1>
       <ul>
         {cinemaSeats.map((elm, idx) => (
           <li key={idx}>
             <em>Row {idx + 1}:</em>
-            <ul>
+            <ul className="cinema-seats">
               {elm.map((seat) => (
                 <Seat seat={seat} onClick={() => reserveSeat(idx + 1, seat.seat)}/>
               ))}

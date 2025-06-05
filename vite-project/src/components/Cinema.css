@@ -1,0 +1,28 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cinema > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.cinema > ul > li {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.cinema > ul li em {
+  margin-right: 16px;
+  font-weight: 600;
+}
+
+.cinema-seats {
+  display: flex;
+  justify-content: center;
+}
