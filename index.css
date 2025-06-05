@@ -1,0 +1,39 @@
+.pink-border {
+  border: 2px solid rgb(230, 0, 255);
+}
+.lightBlue-border {
+  border: 2px solid rgb(0, 163, 188);
+}
+section {
+  width: 40vw;
+  height: 50vw;
+  margin: auto;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+header {
+  height: 3em;
+}
+article {
+  padding: 1em;
+}
+.title {
+  height: 1.5em;
+  margin: 0;
+}
+article div {
+  margin-top: 1em;
+  height: 17em;
+}
+footer {
+  padding: .5em;
+}
+footer .content {
+  height: 5em;
+}
+footer .copyright {
+  height: 1.5em;
+  margin-top: 1rem;
+}
