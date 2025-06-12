@@ -1,5 +1,5 @@
-export const Input = ({type, value}) => {
+export const Input = ({type, value, inputRef}) => {
   return (
-    <input type={type} value={value} />
+    <input type={type} value={value} ref={inputRef}/>
   )
 }
