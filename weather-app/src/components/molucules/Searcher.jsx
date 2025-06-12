@@ -11,11 +11,16 @@ export const Searcher = () => {
     console.log(city)
   }
 
+  const handleClear = () => {
+    inputRef.current.value = '';
+    inputRef.current.focus();
+  }
+
   return (
     <div>
       <Input type={'text'} inputRef={inputRef}/>
       <Button onClick={handleSearch}>Search</Button>
-      <Button>Clean</Button>
+      <Button onClick={handleClear}>Clean</Button>
     </div>
   )
 }
