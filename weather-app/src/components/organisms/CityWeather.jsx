@@ -27,15 +27,17 @@ export const CityWeather = () => {
   const handleSearch = () => {
     const city = inputRef.current.value;
     if(mockWeatherData[city]) {
-      setData(mockWeatherData[city])
+      console.log(mockWeatherData[city])
+      setData({city: mockWeatherData[city]})
     } else {
-      console.log("city not found")
+      setData({city: null})
     }
   }
 
   const handleClear = () => {
     inputRef.current.value = '';
     inputRef.current.focus();
+    setData(null)
   }
 
   return (
