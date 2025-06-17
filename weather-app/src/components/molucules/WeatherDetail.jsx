@@ -1,9 +1,15 @@
+import { Text } from "../atoms/Text"
+
 export const WeatherDetail = ({data}) => {
   return (
     <div>
-      <Text>Temperature: 15ºC</Text>
-      <Text>Humidity: 70%</Text>
-      <Text>Wind Speed: 20Km/h</Text>
+      data ? (
+        <Text>Temperature: {data.temperature}</Text>
+        <Text>Humidity: {data.humidity}</Text>
+        <Text>Wind Speed: {data.windSpeed}</Text>
+      ) : (
+        <Text>City not found</Text>
+      )
     </div>
   )
 }

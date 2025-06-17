@@ -1,10 +1,10 @@
 import './App.css'
-import { Searcher } from './components/molucules/Searcher'
+import { CityWeather } from './components/organisms/CityWeather'
 
 function App() {
   return (
     <>
-      <Searcher></Searcher>
+      <CityWeather></CityWeather>
     </>
   )
 }
