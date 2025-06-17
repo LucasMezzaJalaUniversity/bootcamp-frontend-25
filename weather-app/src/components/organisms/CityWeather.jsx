@@ -50,12 +50,14 @@ export const CityWeather = () => {
     <div>
       <Searcher inputRef={inputRef} handleSearch={handleSearch} handleClear={handleClear}></Searcher>
       {cityList.length > 0 ?
-        cityList.map((row, idx) => (
-          <li key={idx}>
-            <button onClick={e => handleHistoricalSearch(row)}>{row}</button>
-          </li>
-        ))
-        : null}
+        <ul>
+          {cityList.map((row, idx) => (
+            <li key={idx}>
+              <button onClick={e => handleHistoricalSearch(row)}>{row}</button>
+            </li>
+          ))}
+        </ul>
+      : null}
       <WeatherDetail data={data}></WeatherDetail>
     </div>
   )
