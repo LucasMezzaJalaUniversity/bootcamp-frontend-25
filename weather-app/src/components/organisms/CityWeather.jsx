@@ -5,6 +5,7 @@ import { WeatherDetail } from "../molucules/WeatherDetail";
 export const CityWeather = () => {
   const inputRef = useRef(null);
   const [data, setData] = useState(null)
+  const [cityList, setCityList] = useState([])
 
   const mockWeatherData = {
     'New York': {
@@ -27,22 +28,34 @@ export const CityWeather = () => {
   const handleSearch = () => {
     const city = inputRef.current.value;
     if(mockWeatherData[city]) {
-      console.log(mockWeatherData[city])
       setData({city: mockWeatherData[city]})
+      setCityList(prev => [...prev, city])
     } else {
       setData({city: null})
     }
+  }
+
+  const handleHistoricalSearch = (row) => {
+    setData({city: mockWeatherData[row]})
   }
 
   const handleClear = () => {
     inputRef.current.value = '';
     inputRef.current.focus();
     setData(null)
+    setCityList([])
   }
 
   return (
     <div>
       <Searcher inputRef={inputRef} handleSearch={handleSearch} handleClear={handleClear}></Searcher>
+      {cityList.length > 0 ?
+        cityList.map((row, idx) => (
+          <li key={idx}>
+            <button onClick={e => handleHistoricalSearch(row)}>{row}</button>
+          </li>
+        ))
+        : null}
       <WeatherDetail data={data}></WeatherDetail>
     </div>
   )

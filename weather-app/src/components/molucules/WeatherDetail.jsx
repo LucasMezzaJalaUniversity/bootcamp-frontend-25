@@ -6,9 +6,9 @@ export const WeatherDetail = ({data = null}) => {
       {data ? (
         data.city ? (
           <>
-            <Text>Temperature: {data.temperature}</Text>
-            <Text>Humidity: {data.humidity}</Text>
-            <Text>Wind Speed: {data.windSpeed}</Text>
+            <Text>Temperature: {data.city.temperature}</Text>
+            <Text>Humidity: {data.city.humidity}</Text>
+            <Text>Wind Speed: {data.city.windSpeed}</Text>
           </>
         ) : (
           <Text>City not found</Text>
