@@ -37,6 +37,13 @@ export const Board = () => {
     setTasks(prev => prev.filter(row => row.id !== id))
   }
 
+  const handleState = id => {
+    console.log("hola")
+    const selectedTask = tasks.find(row => row.id === id);
+    setTasks(prev => prev.filter(row => row.id !== selectedTask.id))
+    setTasks(prev => [...prev, {...selectedTask, state: !selectedTask.state}])
+  }
+
   return (
     <div>
       <Text>Pague itinerary</Text>
@@ -44,7 +51,7 @@ export const Board = () => {
       {tasks.length > 0 ?
         <ul>
           {tasks.map((row, idx) => (
-            <Task data={row} key={idx} handleDelete={handleDelete} handleEdit={handleEdit}></Task>
+            <Task data={row} key={idx} handleDelete={handleDelete} handleEdit={handleEdit} handleState={handleState}></Task>
           ))}
         </ul>
       : null}      
