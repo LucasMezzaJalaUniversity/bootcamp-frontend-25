@@ -1,5 +1,6 @@
 import { Button } from "../atoms/Button"
 import { Input } from "../atoms/Input"
+import { Text } from "../atoms/Text"
 
 export const Task = ({text, handleEdit, handleDelete}) => {
   return (
