@@ -5,16 +5,33 @@ import { Text } from "../atoms/Text"
 
 export const Board = () => {
   const [tasks, setTasks] = useState([])
+  const [isEdit, setIsEdit] = useState(0)
   const inputRef = useRef(null)
 
-  const handleSearch = () => {
+  const handleSearch = (id = '') => {
     const task = inputRef.current.value;
-    setTasks(prev => [...prev, {id: Date.now(), task: task, state: false}])
+
+    if(!isEdit) {
+      setTasks(prev => [...prev, {id: Date.now(), task: task, state: false}])
+    } else {
+      const selectedTask = tasks.find(row => row.id === id);
+      setTasks(prev => prev.filter(row => row.id !== selectedTask.id))
+      setTasks(prev => [...prev, {...selectedTask, task: task}])
+      setIsEdit(0)
+    }
+
+    inputRef.current.value = '';
   }
 
-  // const handleEdit = id => {
-  //   setTasks(prev => [...prev, task])
-  // }
+  const handleEdit = id => {
+    const task = tasks.find(row => row.id === id);
+    if(!task) return;
+
+    setIsEdit(id)
+
+    inputRef.current.value = task.task
+    inputRef.current.focus();
+  }
 
   const handleDelete = id => {
     setTasks(prev => prev.filter(row => row.id !== id))
@@ -23,11 +40,11 @@ export const Board = () => {
   return (
     <div>
       <Text>Pague itinerary</Text>
-      <Searcher inputRef={inputRef} handleSearch={handleSearch}></Searcher>
+      <Searcher inputRef={inputRef} handleSearch={handleSearch} isEdit={isEdit}></Searcher>
       {tasks.length > 0 ?
         <ul>
           {tasks.map((row, idx) => (
-            <Task data={row} key={idx} handleDelete={handleDelete}></Task>
+            <Task data={row} key={idx} handleDelete={handleDelete} handleEdit={handleEdit}></Task>
           ))}
         </ul>
       : null}      
