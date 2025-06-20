@@ -1,57 +1,85 @@
-import { useRef, useState } from "react"
-import { Searcher } from "../molecules/Searcher"
+import { useReducer, useRef } from "react"
+import { InputTask } from "../molecules/InputTask"
 import { Task } from "../molecules/Task"
 import { Text } from "../atoms/Text"
 
+const taskReducer = (tasks, action) => {
+  if(action.type === 'add-id') {
+    return {...tasks, edit: action.id}
+  } else if(action.type === 'add') {
+    return {...tasks , tasks: [...tasks.tasks, action.task ]}
+  } else if (action.type === 'edit') {
+    return {edit: 0 , tasks: tasks.tasks.map(row => {
+      return row.id === action.task.id ? action.task : row
+    })}
+  } else if(action.type === 'delete') {
+    return {...tasks , tasks: tasks.tasks.filter(row => row.id !== action.task.id)}
+  } else {
+    throw Error('Unknown action: ' + action.type)
+  }
+}
+
 export const Board = () => {
-  const [tasks, setTasks] = useState([])
-  const [isEdit, setIsEdit] = useState(0)
+  const [obj, dispatch] = useReducer(taskReducer, {tasks: [], edit: 0});
   const inputRef = useRef(null)
 
-  const handleSearch = (id = '') => {
+  const handleInput = () => {
     const task = inputRef.current.value;
 
-    if(!isEdit) {
-      setTasks(prev => [...prev, {id: Date.now(), task: task, state: false}])
+    if(!obj.edit) {
+      dispatch({
+        type: 'add',
+        task: {id: Date.now(), task: task, state: false}
+      })
     } else {
-      const selectedTask = tasks.find(row => row.id === id);
-      setTasks(prev => prev.filter(row => row.id !== selectedTask.id))
-      setTasks(prev => [...prev, {...selectedTask, task: task}])
-      setIsEdit(0)
+      const selectedTask = obj.tasks.find(row => row.id === obj.edit);
+      dispatch({
+        type: 'edit',
+        task: {...selectedTask, task: task},
+      }) 
     }
 
     inputRef.current.value = '';
   }
 
   const handleEdit = id => {
-    const task = tasks.find(row => row.id === id);
+    const task = obj.tasks.find(row => row.id === id);
     if(!task) return;
 
-    setIsEdit(id)
+    dispatch({
+      type: 'add-id',
+      id: id,
+    }) 
 
     inputRef.current.value = task.task
     inputRef.current.focus();
   }
 
   const handleDelete = id => {
-    setTasks(prev => prev.filter(row => row.id !== id))
+    dispatch({
+      type: 'delete',
+      task: {id: id},
+    })  
   }
 
   const handleState = id => {
-    console.log("hola")
-    const selectedTask = tasks.find(row => row.id === id);
-    setTasks(prev => prev.filter(row => row.id !== selectedTask.id))
-    setTasks(prev => [...prev, {...selectedTask, state: !selectedTask.state}])
+    const selectedTask = obj.tasks.find(row => row.id === id);
+    dispatch({
+      type: 'edit',
+      task: {...selectedTask, state: !selectedTask.state},
+    })  
   }
 
   return (
     <div>
       <Text>Pague itinerary</Text>
-      <Searcher inputRef={inputRef} handleSearch={handleSearch} isEdit={isEdit}></Searcher>
-      {tasks.length > 0 ?
+      <InputTask inputRef={inputRef} handleSearch={handleInput}></InputTask>
+      {obj.tasks.length > 0 ?
         <ul>
-          {tasks.map((row, idx) => (
-            <Task data={row} key={idx} handleDelete={handleDelete} handleEdit={handleEdit} handleState={handleState}></Task>
+          {obj.tasks.map((row, idx) => (
+            <>
+              <Task data={row} key={idx} handleDelete={handleDelete} handleEdit={handleEdit} handleState={handleState}></Task>
+            </>
           ))}
         </ul>
       : null}      
