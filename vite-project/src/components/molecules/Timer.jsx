@@ -35,11 +35,16 @@ export const Timer = () => {
     setIsRunning(false);
   }
 
+  const formatTime = (time) => {
+    const min = Math.floor(time / 60).toString().padStart(2, "0")
+    const sec = (time % 60).toString().padStart(2, "0")
+    return `${min} mins ${sec} secs`;
+  }
+
   return (
     <div>
       <h1>Timer</h1>
-      <span>{timer}</span>
-      <span><span>0</span> mins <span>0</span> secs</span>
+      <span>{formatTime(timer)}</span>
       <div>
         <Button onClick={handleStart}>Start</Button>
         <Button onClick={handleStop}>Stop</Button>
