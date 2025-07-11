@@ -20,12 +20,4 @@ The Event Loop continuously checks if the Call Stack is empty.
 If the Call Stack is empty, the Event Loop moves callbacks from the Microtask Queue to the Call Stack.
 After the Microtask Queue is empty, the Event Loop moves callbacks from the Callback Queue to the Call Stack for execution.
 
-First the
-
-Callback Queue
-
-Microtask Queue
-
-Event Loop
-
 ![alt text](/image.png)
